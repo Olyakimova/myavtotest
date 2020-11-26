@@ -1,0 +1,35 @@
+# логин в систему
+from selenium import webdriver
+import time
+driver = webdriver.Chrome()
+driver.get("https://opensource-demo.orangehrmlive.com/")
+login = driver.find_element_by_css_selector("input#txtUsername")
+login.send_keys("Admin")
+password = driver.find_element_by_id("txtPassword")
+password.send_keys("admin123")
+login_btn = driver.find_element_by_name("Submit")
+login_btn.click()
+time.sleep(2)
+
+# удаление пользователя
+pim = driver.find_element_by_id("menu_pim_viewPimModule") # переход во вкладку PIM
+pim.click()
+time.sleep(5)
+em_list = driver.find_element_by_id("menu_pim_viewEmployeeList") # переход в раздел Employee List
+em_list.click()
+time.sleep(2)
+em_name = driver.find_element_by_css_selector("input#empsearch_employee_name_empName") # обозначаю поле ввода
+em_name.send_keys("Olga Yakimova") # ввод данных в поле Employee Name
+time.sleep(2)
+search_btn = driver.find_element_by_name("_search")
+search_btn.click()
+time.sleep(4)
+checkbox = driver.find_element_by_xpath("//input[@name='chkSelectRow[]']") # обозначаю чек-бокс
+checkbox.click()
+time.sleep(2)
+del_btn = driver.find_element_by_id("btnDelete") # обозначаю кнопку Delete
+del_btn.click()
+OK_del_btn = driver.find_element_by_css_selector("div.modal-footer #dialogDeleteBtn") # обозначаю кнопку ОК в открывшемся диалоговом окне
+time.sleep(2)
+OK_del_btn.click()
+driver.quit()
