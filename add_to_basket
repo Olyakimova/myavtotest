@@ -1,0 +1,30 @@
+from selenium import webdriver # импортируем webdriver 
+import time
+driver = webdriver.Chrome() # вызываем драйвер браузера, после этой команды вы должны увидеть новое открытое окно браузера
+driver.maximize_window() # позволяет открывать бразуер в полном окне
+# Добавление товаров в корзину
+driver.get("http://www.rushplace.com/")
+# Добавляем первый товар
+prod_fir = driver.find_element_by_css_selector("[data-product_id='44']")
+prod_fir.click()
+# Устанавливаем паузу в 1 сек., чтобы товар успел добавиться в корзину
+time.sleep(1)
+# Добавляем второй товар
+prod_sec = driver.find_element_by_css_selector("[data-product_id='63']")
+prod_sec.click()
+time.sleep(1)
+# Добавляем третий товар
+prod_thr = driver.find_element_by_css_selector("[data-product_id='40']")
+prod_thr.click()
+time.sleep(1)
+# Переходим в корзину
+basket = driver.find_element_by_css_selector("[title='View basket']")
+basket.click()
+# Находим список всех элементов в корзине
+items_count = driver.find_elements_by_class_name("woocommerce-cart-form__cart-item.cart_item")
+# Проверка что в корзине действительно 3 товара
+if len(items_count) == 3:
+    print("В корзине 3 товара")
+else:
+    print("Ошибка. Количество товаров в корзине: " + str(len(items_count)))
+driver.quit()
