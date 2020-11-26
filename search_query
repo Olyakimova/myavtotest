@@ -1,20 +1,19 @@
 import time
 from selenium import webdriver
-# Вызываю драйвер браузера
+# Вызываем драйвер браузера
 driver = webdriver.Chrome()
-# Устанавливаю паузу в 2 сек., чтобы данные успели подгрузиться
+# Устанавливаем паузу в 2 сек., чтобы данные успели подгрузиться
 time.sleep(2)
-# Сообщаю браузеру, что нужно открыть сайт по указанной ссылке
+# Сообщаем браузеру, что нужно открыть сайт по указанной ссылке
 driver.get("https://yandex.ru/")
 time.sleep(2)
-# Ищу элемент поля поиска
+# Указываем элемент поля поиска
 textfield = driver.find_element_by_xpath("//input[@id='text']")
-# Пишу текст в поле поиска
+# Пишем текст в поле поиска
 textfield.send_keys("погода на завтра в СПб")
-# Указываю путь к кнопке поиска
-submit_button = driver.find_element_by_xpath(
-    "//div[@class='search2__button']//button[@type='submit']")
-# Нажимаю кнопку поиска
+# Указываем путь к кнопке поиска
+submit_button = driver.find_element_by_xpath("//div[@class='search2__button']//button[@type='submit']")
+# Нажимаем кнопку поиска
 submit_button.click()
-# Закрываю браузер
+# Закрываем браузер
 driver.quit()
