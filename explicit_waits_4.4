@@ -1,0 +1,45 @@
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium import webdriver
+import time
+
+driver = webdriver.Chrome()
+driver.maximize_window()
+driver.implicitly_wait(5)
+driver.get("http://demo.automationtesting.in/WebTable.html")
+
+# Переход в раздел More -> JQuery ProgressBar
+more = driver.find_element_by_css_selector(
+    ".nav.navbar-nav li:nth-child(9) .dropdown-toggle")
+more.click()
+more_loading_file_upload = driver.find_element_by_css_selector(
+    ".nav.navbar-nav li:nth-child(9) .dropdown-menu li:nth-child(5) a")
+more_loading_file_upload.click()
+
+# Проверка что кнопка "Close" невидимa
+close_btn = WebDriverWait(driver, 10).until(
+    EC. invisibility_of_element_located((By.CSS_SELECTOR, "div.ui-dialog-buttonset")))
+print("кнопка 'Close' невидимa", close_btn)
+
+# Открытие окна загрузки
+start_download = driver.find_element_by_css_selector("button#downloadButton")
+start_download.click()
+
+# Проверка что кнопка называется "Cancel Download"
+close_download_btn = WebDriverWait(driver, 10).until(
+    EC.text_to_be_present_in_element((By.XPATH, "//button[text()='Cancel Download']"), "Cancel Download"))
+print("Cancel Download", close_download_btn)
+
+# Закрытие -> открытие окна загрузки
+close_btn = driver.find_element_by_xpath("//button[text()='Close']")
+close_btn.click()
+
+start_download.click()
+
+# Проверка финального текста
+file_download = WebDriverWait(driver, 10).until(
+    EC.text_to_be_present_in_element((By.CSS_SELECTOR, "[role='dialog']"), "Complete!"))
+print("Complete!", file_download)
+
+driver.quit()
