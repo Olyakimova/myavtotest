@@ -1,0 +1,32 @@
+from selenium import webdriver
+
+driver = webdriver.Chrome()
+driver.get("http://practice.automationtesting.in/")
+driver.implicitly_wait(5)
+driver.maximize_window()
+
+driver.execute_script("window.scrollBy(0, 600);")
+
+# Переход в карточку товара/книги "Selenium Ruby"
+driver.find_element_by_xpath("//h3[text()='Selenium Ruby']").click()
+
+# Переход на вкладку Reviews
+driver.find_element_by_xpath("//a[text()='Reviews (0)']").click()
+
+# Заполнение формы Reviews
+your_rating = driver.find_element_by_css_selector("a.star-5")
+your_rating.click()
+
+your_review = driver.find_element_by_id("comment")
+your_review.send_keys("Nice book!")
+
+name = driver.find_element_by_id("author")
+name.send_keys("Olga")
+
+email = driver.find_element_by_id("email")
+email.send_keys("tester@gmail.com")
+
+submit_btn = driver.find_element_by_id("submit")
+submit_btn.click()
+
+driver.quit()
