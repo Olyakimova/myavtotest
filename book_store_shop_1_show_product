@@ -1,0 +1,37 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+driver = webdriver.Chrome()
+driver.get("http://practice.automationtesting.in/")
+driver.implicitly_wait(5)
+driver.maximize_window()
+
+# Логин
+my_account_menu = driver.find_element_by_link_text("My Account")
+my_account_menu.click()
+user_name_field = driver.find_element_by_id("username")
+user_name_field.send_keys("test@email.com")
+password_field = driver.find_element_by_id("password")
+password_field.send_keys("SomeHardPassword123!@#!@#")
+login_btn = driver.find_element_by_name("login")
+login_btn.click()
+
+# Переход на вкладку Shop
+shop_tab = driver.find_element_by_link_text("Shop")
+shop_tab.click()
+
+# 1. Отображение страницы товара
+time.sleep(3)
+driver.execute_script("window.scrollBy(0, 600);")
+
+book_html5 = driver.find_element_by_xpath("//h3[text()='HTML5 Forms']")
+book_html5.click()
+
+# Проверка что заголовок книги "HTML5 Forms"
+book_name = WebDriverWait(driver, 10).until(
+    EC.text_to_be_present_in_element((By.XPATH, "//h1"), "HTML5 Forms"))
+print("HTML5 Forms", book_name)
+
+driver.quit()
