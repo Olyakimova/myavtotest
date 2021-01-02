@@ -1,0 +1,37 @@
+from selenium import webdriver
+
+driver = webdriver.Chrome()
+driver.get("http://practice.automationtesting.in/")
+driver.implicitly_wait(5)
+driver.maximize_window()
+
+# Логин
+my_account_menu = driver.find_element_by_link_text("My Account")
+my_account_menu.click()
+user_name_field = driver.find_element_by_id("username")
+user_name_field.send_keys("test@email.com")
+password_field = driver.find_element_by_id("password")
+password_field.send_keys("SomeHardPassword123!@#!@#")
+login_btn = driver.find_element_by_name("login")
+login_btn.click()
+
+# Переход на вкладку Shop
+shop_tab = driver.find_element_by_link_text("Shop")
+shop_tab.click()
+
+#  2. Количество товаров в категории
+time.sleep(3)
+
+#  Переход в категорию "HTML"
+categories_html = driver.find_element_by_xpath("//a[text()='HTML']")
+categories_html.click()
+
+# Проверка что отображается три товара
+
+items_count = driver.find_elements_by_css_selector("li.product.type-product")
+if len(items_count) == 3:
+    print("В разделе 3 товара")
+else:
+    print("Ошибка. Количество товаров в разделе: " + str(len(items_count)))
+
+driver.quit()
